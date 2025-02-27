@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <div id="login-container">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+    </div>
+
+    <div id="dashboard" style="display: none;">
+        <nav>
+            <button onclick="showPage('home')">Home</button>
+            <button onclick="showPage('stock')">Stock</button>
+            <button onclick="showPage('sales')">Sales</button>
+            <button onclick="showPage('items')">Items</button>
+            <button onclick="logout()" id="logout">Logout</button>
+        </nav>
+        
+        <div id="home" class="page"> 
+            <h2>Business Overview</h2>
+            <p>Dashboard displaying key metrics.</p>
+        </div>
+        
+        <div id="stock" class="page" style="display: none;">
+            <h2>Stock Management</h2>
+            <ul id="stock-list"></ul>
+            <button onclick="addProductForm()" id="add-product">Add Product</button>
+        </div>
+        
+        <div id="sales" class="page" style="display: none;">
+            <h2>Sales Data</h2>
+            <ul id="sales-list"></ul>
+        </div>
+        
+        <div id="items" class="page" style="display: none;">
+            <h2>Manage Items</h2>
+            <ul id="items-list"></ul>
+        </div>
+    </div>
+
+    <script>
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            if (username === 'MUA' && password === 'MUA1234') {
+                document.getElementById('login-container').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+            } else {
+                alert('Invalid Credentials');
+            }
+        }
+
+        function logout() {
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('login-container').style.display = 'block';
+        }
+
+        function showPage(page) {
+            document.querySelectorAll('.page').forEach(div => div.style.display = 'none');
+            document.getElementById(page).style.display = 'block';
+        }
+    </script>
+</body>
+</html>
