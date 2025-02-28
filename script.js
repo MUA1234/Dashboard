@@ -126,6 +126,7 @@ function updateStock() {
         let stock = JSON.parse(localStorage.getItem("stock")) || [];
         let totalSalesToday = 0;
         let itemsSoldToday = 0;
+        let now = new Date().toLocaleString(); // Get current timestamp
 
         stock.forEach(product => {
             let soldAmount = product.previousQuantity - product.quantity;
@@ -133,19 +134,23 @@ function updateStock() {
                 product.sales += product.price * soldAmount;
                 totalSalesToday += product.price * soldAmount;
                 itemsSoldToday += soldAmount;
+                product.lastSoldTime = now; // Store timestamp
             }
             product.previousQuantity = product.quantity;
         });
 
         localStorage.setItem("stock", JSON.stringify(stock));
-        localStorage.setItem("lastStockUpdate", new Date().toLocaleString());
+        localStorage.setItem("lastStockUpdate", now);
         localStorage.setItem("salesToday", totalSalesToday);
         localStorage.setItem("itemsSoldToday", itemsSoldToday);
 
         loadStock();
         updateDashboard();
+        loadSales();
     }
 }
+
+
 
 
 function updateDashboard() {
@@ -184,12 +189,16 @@ function loadSales() {
     let stock = JSON.parse(localStorage.getItem("stock")) || [];
 
     stock.forEach((product, index) => {
-        if (product.sales > 0) {
+        let soldQuantity = product.previousQuantity - product.quantity;
+        if (soldQuantity > 0) {
+            let saleTime = product.lastSoldTime || "N/A";
+
             const salesItem = document.createElement("div");
             salesItem.classList.add("sales-item");
             salesItem.innerHTML = `
                 <img src="${product.image || 'placeholder.jpg'}" class="product-img">
-                <span>${product.name} - Sold: ${product.previousQuantity - product.quantity} - Revenue: $${product.sales}</span>
+                <span>${product.name} - Sold: ${soldQuantity} - Revenue: $${product.sales}</span>
+                <span>Time: ${saleTime}</span>
                 <button class="reset-btn" onclick="resetSales(${index})">Reset</button>
             `;
             salesList.appendChild(salesItem);
@@ -197,13 +206,25 @@ function loadSales() {
     });
 }
 
-function resetSales(index) {
-    let stock = JSON.parse(localStorage.getItem("stock")) || [];
-    stock[index].sales = 0;
-    localStorage.setItem("stock", JSON.stringify(stock));
-    loadSales();
-    updateDashboard();
+
+function resetSale(index) {
+    let stock = JSON.parse(localStorage.getItem("stock"));
+    if (confirm(`Reset sales data for ${stock[index].name}?`)) {
+        stock[index].sales = 0;
+        localStorage.setItem("stock", JSON.stringify(stock));
+        loadSalesData();
+    }
 }
+
+function resetAllSales() {
+    if (confirm("Reset all sales data?")) {
+        let stock = JSON.parse(localStorage.getItem("stock"));
+        stock.forEach(product => product.sales = 0);
+        localStorage.setItem("stock", JSON.stringify(stock));
+        loadSalesData();
+    }
+}
+
 
 function loadProducts() {
     const productList = document.getElementById("product-list");
@@ -244,6 +265,44 @@ function editProduct(index) {
         document.getElementById("product-form").onsubmit = addProduct;
     };
 }
+
+
+
+function loadSalesData() {
+    const salesList = document.getElementById("sales-list");
+    salesList.innerHTML = ""; // Clear existing data
+    let stock = JSON.parse(localStorage.getItem("stock")) || [];
+
+    stock.forEach((product, index) => {
+        if (product.sales > 0) {
+            const saleEntry = document.createElement("div");
+            saleEntry.classList.add("sale-entry");
+            saleEntry.innerHTML = `
+                <p><strong>${product.name}</strong></p>
+                <p>Revenue: $${product.sales.toFixed(2)}</p>
+                <p>Last Sold: ${product.lastSoldTime || "N/A"}</p>
+                <button class="reset-btn" onclick="resetSale(${index})">Reset</button>
+            `;
+            salesList.appendChild(saleEntry);
+        }
+    });
+
+    // If no sales, show a message
+    if (salesList.innerHTML === "") {
+        salesList.innerHTML = "<p>No sales recorded yet.</p>";
+    }
+}
+
+
+function showPage(page) {
+    document.querySelectorAll(".page").forEach(div => div.style.display = "none");
+    document.getElementById(page).style.display = "block";
+
+    if (page === "sales") {
+        loadSalesData();
+    }
+}
+
 
 
 
