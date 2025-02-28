@@ -24,10 +24,37 @@
             <button onclick="logout()" id="logout">Logout</button>
         </nav>
         
-        <div id="home" class="page"> 
+        <div id="home" class="page">
             <h2>Business Overview</h2>
-            <p>Dashboard displaying key metrics.</p>
+            <div id="dashboard-metrics">
+                <div class="metric-card">
+                    <h3>Total Sales</h3>
+                    <p id="total-sales">$0</p>
+                </div>
+                <div class="metric-card">
+                    <h3>Total Products</h3>
+                    <p id="total-products">0</p>
+                </div>
+                <div class="metric-card">
+                    <h3>Total Stock Available</h3>
+                    <p id="total-stock">0</p>
+                </div>
+                <div class="metric-card">
+                    <h3>Total Sales Today</h3>
+                    <p id="total-sales-today">$0</p>
+                </div>
+                <div class="metric-card">
+                    <h3>Items Sold Today</h3>
+                    <p id="items-sold-today">0</p>
+                </div>
+                <div class="metric-card">
+                    <h3>Last Stock Update</h3>
+                    <p id="last-stock-update">N/A</p>
+                </div>
+            </div>
         </div>
+        
+        
         
         <div id="stock" class="page" style="display: none;">
             <h2>Stock Management</h2>
@@ -35,15 +62,23 @@
             <button onclick="addProductForm()" id="add-product">Add Product</button>
         </div>
         
-        <div id="sales" class="page" style="display: none;">
+        <div id="sales" class="page">
             <h2>Sales Data</h2>
-            <ul id="sales-list"></ul>
+            <div id="sales-list"></div>
+        </div>        
+        
+        <div id="items" class="page">
+            <h2>Manage Products</h2>
+            <form id="product-form">
+                <input type="text" id="product-name" placeholder="Product Name" required>
+                <input type="number" id="product-price" placeholder="Price" required>
+                <input type="number" id="product-quantity" placeholder="Stock Quantity" required>
+                <input type="file" id="product-image" accept="image/*">
+                <button type="submit">Add Product</button>
+            </form>
+            <div id="product-list"></div>
         </div>
         
-        <div id="items" class="page" style="display: none;">
-            <h2>Manage Items</h2>
-            <ul id="items-list"></ul>
-        </div>
     </div>
 
     <script>
