@@ -6,6 +6,32 @@
     <title>Business Dashboard</title>
     <link rel="stylesheet" href="styles.css">
     <script defer src="script.js"></script>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyCwm2CZYxWQx91pXyOKXKEwnKYWyRTEB5E",
+          authDomain: "business-8621d.firebaseapp.com",
+          projectId: "business-8621d",
+          storageBucket: "business-8621d.firebasestorage.app",
+          messagingSenderId: "87986548088",
+          appId: "1:87986548088:web:f4a5d7eef91f17e1696c8d",
+          measurementId: "G-0SK3JYK9TX"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+      </script>
+  
+      
 </head>
 <body>
     <div id="login-container">
@@ -24,7 +50,7 @@
             <button onclick="logout()" id="logout">Logout</button>
         </nav>
         
-        <div id="home" class="page">
+        <center><div id="home" class="page">
             <h2>Business Overview</h2>
             <div id="dashboard-metrics">
                 <div class="metric-card">
@@ -52,7 +78,7 @@
                     <p id="last-stock-update">N/A</p>
                 </div>
             </div>
-        </div>
+        </div></center>
         
         
         
@@ -65,7 +91,9 @@
         <div id="sales" class="page">
             <h2>Sales Data</h2>
             <div id="sales-list"></div>
-        </div>        
+            <button id="reset-sales-btn" onclick="resetAllSales()">Reset All Sales</button>
+        </div>
+               
         
         <div id="items" class="page">
             <h2>Manage Products</h2>
