@@ -73,6 +73,7 @@ nav button:hover {
     margin-top: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    color:black;
 }
 
 #logout{
@@ -133,7 +134,7 @@ nav button:hover {
 
 .metric-card h3 {
     font-size: 16px;
-    color: #333;
+    color: #ff7f30;
     margin-bottom: 5px;
 }
 
@@ -242,4 +243,86 @@ nav button:hover {
 
 .reset-btn:hover {
     background-color: #D50000;
+}
+
+
+
+
+
+body {
+    background-color: #202020;
+    color: #E0E0E0;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #282828;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(255, 255, 255, 0.1);
+}
+
+.sidebar h2 {
+    color: #ffffff;
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 20px 0;
+}
+
+.sidebar button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #444;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.sidebar button:hover {
+    background-color: #555;
+}
+
+.logout {
+    background-color: #d9534f;
+    margin-top: 20px;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.logout:hover {
+    background-color: #c9302c;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.page h1 {
+    color: #f8f9fa;
+}
+
+.page p {
+    color: #c0c0c0;
 }
